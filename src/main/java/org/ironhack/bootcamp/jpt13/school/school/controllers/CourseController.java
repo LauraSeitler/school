@@ -1,10 +1,9 @@
-package org.ironhack.bootcamp.jpt13.school.school.models;
+package org.ironhack.bootcamp.jpt13.school.school.controllers;
 
+import org.ironhack.bootcamp.jpt13.school.school.models.Course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +14,9 @@ public class CourseController implements CourseControllerInterface {
     @GetMapping("/courses")
     @ResponseStatus(HttpStatus.OK)
     public List<Course> getCourses() {
-       // return courseReposotiry.findAll();
+       // return courseRepository.findAll();
 
-        @Autowired
+
         //this would typically be a call to your data or service layer
         List<Course> courseList = new ArrayList<>();
 
@@ -26,6 +25,18 @@ public class CourseController implements CourseControllerInterface {
 
         return courseList;
     }
+    @GetMapping("/course/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Course> getCoursesByNamePathVariable(@PathVariable name) {
+        return courseRepository.findByCourseName(name);
+    }
+
+    @GetMapping("/course")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Course> getCoursesByNameQueryParam(@RequestParam String name) {
+        return courseRepository.findByCourseName(name);
+    }
+
 
     public CourseController() {
     }
